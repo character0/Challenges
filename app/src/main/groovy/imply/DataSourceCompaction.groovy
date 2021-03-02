@@ -14,41 +14,11 @@ import groovy.json.*
 //java -cp Imply.jar challenges.DataSourceCompaction
 //gradle run --args='../'
 
-/*
-The goal is to combine the files, eliminating any duplicates and write to a single .CSV file sorted alphabetically by the city name.
-You can use any technology that you prefer.
-The desired solution should be as generic, repeatable, and as automated as possible.
-
-Once the dataset is completed, answer the following questions (and provide an explanation of how you determined your answer with any applicable code):
-// TODO - what determines a duplicate? city/country only or city/country/population? How do we handle duplicates by removing them? What happens to the population?
-
-What is the count of all rows?
-What is the city with the largest population?
-What is the total population of all cities in Brazil (CountryCode == BRA)?
-
-What changes could be made to improve your program's performance.
-- Async calls and process different file types simultaneously.
-- Eliminating duplicates with hash collisions over utilizing several loops.
-- Keep track of population while processing files to obtain highest population key.
-- Keeping sort order while building list.
-
-How would you scale your solution to a much larger dataset (too large for a single machine to store)?
-- First pass would be to
-- Second approach would be to simply leverage Apache Spark. The code below can easily be modified to a Java Spark job
-for disributed computing of large datasets.
-
-Your deliverable should be the following:
-Your code to generate the dataset
-A runbook with a guide on using your program
-The dataset generated
-Answers to the previous questions
-*/
-
 
 class DataSourceCompaction {
 
 
-    final static String DEFAULT_BASE_DIR = "../conf"
+    final static String DEFAULT_BASE_DIR = "./conf"
 
 
     static void main(String[] args) {
