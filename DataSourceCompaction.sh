@@ -1,1 +1,2 @@
-./gradlew run --args='.\conf'
+#!/bin/bash
+sh gradlew run --args='.\conf'

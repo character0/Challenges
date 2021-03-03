@@ -36,6 +36,8 @@ or since a Manifest file is also provided:
 java -jar app.jar
 ```
 
+## Imply Deliverables ##
+The _CompactedCityList.csv_ file included with this project is a sample dataset generated from the sample CityList files in ./conf.
 
 **What is the count of all rows?**
 
@@ -44,8 +46,8 @@ _2583 Total Rows. 2078 Total Unique Rows._
 For the total number of rows processed, a simple counter was kept to keep track of the number of rows processed per data source. 
 The totals for each data source were then tallied for the total number or rows processed. 
 
-For the number of unique rows, a HashMap was utilized to use hash collisions to detect duplicaes. Once compleated, 
-the .size() of my cleansed list of data entries provides the unique count.
+For the number of unique rows, a HashMap was utilized to use hash collisions to detect duplicates. Once completed, 
+the .size() of my cleansed list of data entries provides the unique count of rows.
 
 **What is the city with the largest population?**
 
@@ -57,8 +59,8 @@ def largestPopulation = lisOfPopulations.max()
 def largestCity = mergedDataSource.find { key, value -> value.getAt("population") as Long == largestPopulation }
  ```
 
-From my cleansed dataset, sorting by population values and taking the first (or last entry depending on sort order) will
-yield the highest value. I am then able to find the row entry from my cleansed data set using the population value as the key.
+From my cleansed dataset, I collect the population values and place them into a simple List where I am then able to find the max value
+using the lib. function. I am then able to find the row entry from my cleansed data set using the population value as the key.
 
 **What is the total population of all cities in Brazil (CountryCode == BRA)?**
 
@@ -90,10 +92,3 @@ mergedDataSource.each {
 **How would you scale your solution to a much larger dataset (too large for a single machine to store)?**
 - Migrate the program to a Spark job and leverage Apache Spark. The code can easily be modified to a Java Spark job
 for disributed computing of much larger datasets.
-
-
-Your deliverable should be the following:
-- Your code to generate the dataset
-- A runbook with a guide on using your program
-- The dataset generated
-- Answers to the previous questions

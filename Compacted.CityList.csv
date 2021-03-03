@@ -35,6 +35,26 @@ Akishima,JPN,106914
 Akita,JPN,314440
 Akola,IND,328034
 Akure,NGA,162300
+al-Arish,EGY,100447
+al-Ayn,ARE,225970
+al-Diwaniya,IRQ,196519
+al-Faiyum,EGY,260964
+al-Fashir,SDN,141884
+al-Hilla,IRQ,268834
+al-Kharj,SAU,152100
+al-Mahallat al-Kubra,EGY,395402
+al-Manama,BHR,148000
+al-Mansura,EGY,369621
+al-Mubarraz,SAU,219100
+al-Nasiriya,IRQ,265937
+al-Qamishliya,SYR,144286
+al-Ramadi,IRQ,192556
+al-Raqqa,SYR,108020
+al-Rusayfa,JOR,137247
+al-Sulaymaniya,IRQ,364096
+al-Taif,SAU,416100
+al-Tuqba,SAU,125700
+al-Zarqa,JOR,389815
 Alagoinhas,BRA,126820
 Alanya,TUR,117300
 Albacete,ESP,147527
@@ -170,8 +190,8 @@ Barbacena,BRA,113079
 Barcelona,VEN,322267
 Barinas,VEN,217831
 Barletta,ITA,91904
-Barra Mansa,BRA,168953
 Barra do Piraí,BRA,89388
+Barra Mansa,BRA,168953
 Barrackpur,IND,133265
 Barrancabermeja,COL,178020
 Barretos,BRA,104156
@@ -1503,13 +1523,13 @@ Resistencia,ARG,229212
 Rewa,IND,128981
 Reykjavík,ISL,109184
 Reynosa,MEX,419776
-Ribeirão Pires,BRA,108121
 Ribeirão das Neves,BRA,232685
+Ribeirão Pires,BRA,108121
 Richmond,CAN,148867
 Richmond Hill,CAN,116428
 Rimini,ITA,131062
-Rio Verde,BRA,107755
 Rio de Janeiro,BRA,5598953
+Rio Verde,BRA,107755
 Rishon Le Ziyyon,ISR,188200
 Rishra,IND,102649
 Rizhao,CHN,185048
@@ -1564,6 +1584,7 @@ Sambhal,IND,150869
 San Andrés Tuxtla,MEX,142251
 San Bernardo,CHL,241910
 San Carlos,PHL,118259
+[San Cristóbal de] la Laguna,ESP,127945
 San Felipe,MEX,95305
 San Felipe de Puerto Plata,DOM,89423
 San Fernando,ARG,153036
@@ -1582,9 +1603,9 @@ San Miguel de Tucumán,ARG,470809
 San Nicolás de los Arroyos,ARG,119302
 San Pablo,PHL,207927
 San Pedro,PHL,231403
-San Pedro Garza García,MEX,126147
-San Pedro de Macorís,DOM,124735
 San Pedro de la Paz,CHL,91684
+San Pedro de Macorís,DOM,124735
+San Pedro Garza García,MEX,126147
 San Rafael,ARG,94651
 San Salvador,SLV,415346
 San Salvador de Jujuy,ARG,178748
@@ -1595,8 +1616,8 @@ Santa Ana,SLV,139389
 Santa Bárbara d´Oeste,BRA,171657
 Santa Coloma de Gramenet,ESP,120802
 Santa Cruz,PHL,92694
-Santa Cruz de Tenerife,ESP,213050
 Santa Cruz de la Sierra,BOL,935361
+Santa Cruz de Tenerife,ESP,213050
 Santa Cruz do Sul,BRA,106734
 Santa Fé,ARG,353063
 Santa Luzia,BRA,164704
@@ -2050,27 +2071,6 @@ Zukovski,RUS,96500
 Zunyi,CHN,261862
 Zwolle,NLD,105819
 Zürich,CHE,336800
-[San Cristóbal de] la Laguna,ESP,127945
-al-Arish,EGY,100447
-al-Ayn,ARE,225970
-al-Diwaniya,IRQ,196519
-al-Faiyum,EGY,260964
-al-Fashir,SDN,141884
-al-Hilla,IRQ,268834
-al-Kharj,SAU,152100
-al-Mahallat al-Kubra,EGY,395402
-al-Manama,BHR,148000
-al-Mansura,EGY,369621
-al-Mubarraz,SAU,219100
-al-Nasiriya,IRQ,265937
-al-Qamishliya,SYR,144286
-al-Ramadi,IRQ,192556
-al-Raqqa,SYR,108020
-al-Rusayfa,JOR,137247
-al-Sulaymaniya,IRQ,364096
-al-Taif,SAU,416100
-al-Tuqba,SAU,125700
-al-Zarqa,JOR,389815
 �?guas Lindas de Goiás,BRA,89200
 Çorum,TUR,145495
 Šahty,RUS,221800

@@ -11,54 +11,53 @@ import org.apache.avro.generic.*
 
 import groovy.json.*
 
-//java -cp Imply.jar challenges.DataSourceCompaction
+//java -cp app.jar imply.DataSourceCompaction
 //gradle run --args='../'
 
-
+@groovy.util.logging.Log
 class DataSourceCompaction {
 
-
     final static String DEFAULT_BASE_DIR = "./conf"
-
 
     static void main(String[] args) {
 
         HashMap mergedDataSource = [:]
         if (args.size() == 0) {
-            println "No directory argument given; Running Demo Mode."
+            log.info "No directory argument given; Running Demo Mode."
             mergedDataSource = compactDataSources(DEFAULT_BASE_DIR)
         } else if (args.size() == 1) {
-            println "Directory argument ${args[0]} passed in for processing."
+            log.info "Directory argument ${args[0]} passed in for processing."
             if (new File(args[0]).exists()) {
                 mergedDataSource = compactDataSources(args[0])
             } else {
-                println "ERROR: Argument ${new File(args[0]).absolutePath} not a valid directory."
+                log.error "Argument ${new File(args[0]).absolutePath} not a valid directory."
                 System.exit(0)
             }
         } else {
-            println "ERROR: Too many arguments (${args.size()}) passed in, expected 1 or 0; Shutting down."
+            log.error "Too many arguments (${args.size()}) passed in, expected 1 or 0; Shutting down."
             System.exit(0)
         }
 
         if (mergedDataSource.size() > 0) {
 
             //What is the city with the largest population?
-            def lisOfPopulations = mergedDataSource.collect { it.value.get("population") as Long }
+            /*def lisOfPopulations = mergedDataSource.collect { it.value.get("population") as Long }
             def largestPopulation = lisOfPopulations.max()
             def largestCity = mergedDataSource.find { key, value -> value.getAt("population") as Long == largestPopulation }
-            println "The city with the largest population is: ${largestCity.value.getAt("name")}, ${largestCity.value.getAt("country")} with a population of ${largestCity.value.getAt("population")}"
+            log.info "The city with the largest population is: ${largestCity.value.getAt("name")}, ${largestCity.value.getAt("country")}
+            with a population of ${largestCity.value.getAt("population")}"*/
 
             //What is the total population of all cities in Brazil (CountryCode == BRA)?
-            def braTotalPopulation = 0;
+            /*def braTotalPopulation = 0;
             mergedDataSource.each {
                 if (it.value.get("country").toString().equalsIgnoreCase("BRA")) {
-                    //println "BRA: ${it.value.get("name").toString()} - ${it.value.get("population").toString()}"
+                    //log.info "BRA: ${it.value.get("name").toString()} - ${it.value.get("population").toString()}"
                     braTotalPopulation += Long.parseLong(it.value.get("population").toString())
                 } else {
                     return
                 }
             }
-            println "The total population for Brazil amongst the dataset is: ${braTotalPopulation}"
+            log.info "The total population for Brazil amongst the dataset is: ${braTotalPopulation}"*/
         }
 
     }
@@ -76,17 +75,17 @@ class DataSourceCompaction {
         File[] avro = folder.listFiles(
                 { dir, file -> file ==~ /.*\.[a][v][r][o]/ } as FilenameFilter
         )?.toList()
-        println "Found ${avro.size()} .avro files in ${folder.path}."
+        log.info "Found ${avro.size()} .avro files in ${folder.path}."
 
         File[] json = folder.listFiles(
                 { dir, file -> file ==~ /.*\.[j][s][o][n]/ } as FilenameFilter
         )?.toList()
-        println "Found ${json.size()} .json files in ${folder.path}."
+        log.info "Found ${json.size()} .json files in ${folder.path}."
 
         File[] csv = folder.listFiles(
                 { dir, file -> file ==~ /.*\.[c][s][v]/ } as FilenameFilter
         )?.toList()
-        println "Found ${csv.size()} .csv files in ${folder.path}."
+        log.info "Found ${csv.size()} .csv files in ${folder.path}."
 
         return avro + csv + json
     }
@@ -129,8 +128,8 @@ class DataSourceCompaction {
 
         def totalRowsProcessed = 0
         def filename = fileToProcess.getName()
-        CharSequence charSequence = new StringBuffer(".-_ ")
-        def tokens = filename.tokenize(charSequence)
+        CharSequence fileTokenizers = new StringBuffer(".-_ ")
+        def tokens = filename.tokenize(fileTokenizers)
 
         //Switch on file type and parse data accordingly.
         def fileExt = tokens[tokens.size() - 1].toLowerCase()
@@ -150,7 +149,7 @@ class DataSourceCompaction {
                 def parser = new JsonSlurper().setType(JsonParserType.LAX)
                 def parsedFileData = parser.parse(fileToProcess, "UTF-8")
                 parsedFileData.each { line ->
-                    def city = line.Name
+                    def city = line.Name.trim()
                     def country = line.CountryCode
                     def pop = line.Population
                     processedRecords.put("${city},${country}", ["name" : city, "country" : country, "population" : pop])
@@ -160,7 +159,7 @@ class DataSourceCompaction {
                 def parsedFileData = new CsvParser().parse(fileToProcess.newReader(),
                         separator: CSVParser.DEFAULT_SEPARATOR, quoteChar: CSVParser.DEFAULT_QUOTE_CHARACTER, charset: "UTF-8")
                 parsedFileData.each { line ->
-                    def city = line.Name
+                    def city = line.Name.trim()
                     def country = line.CountryCode
                     def pop = line.Population
                     processedRecords.put("${city},${country}", ["name": city, "country": country, "population": pop])
@@ -168,11 +167,12 @@ class DataSourceCompaction {
                 }
                 break
             default:
-                println "Bad file? Shouldn't happen..."
+                log.error "Bad file? Shouldn't happen..."
                 break
         }
 
-        println "Processed ${totalRowsProcessed} lines of data from file: $fileToProcess.name"
+        log.info "Processed ${totalRowsProcessed} lines of data from file: $fileToProcess.name"
+        return totalRowsProcessed
     }
 
     /**
@@ -192,21 +192,24 @@ class DataSourceCompaction {
         if (folderToProcess.isDirectory()) {
 
             File[] filesToCompact = findDataSourceFiles(folderToProcess)
-            println "Compacting ${filesToCompact.length} datasource files."
+            log.info "Compacting ${filesToCompact.length} datasource files."
 
             //TODO Optimization for async
-            filesToCompact.each {processDataFromSource(it, compactedData) }
+            def totalRowsProccessed = 0;
+            filesToCompact.each {totalRowsProccessed += processDataFromSource(it, compactedData) }
 
-            def sortedAndCompactedData = compactedData.sort { a, b ->
-                a.value.get("name") <=> b.value.get("name")
+            def sortedAndCompactedData = compactedData.sort {  a,  b ->
+                def cityA = a.value.getAt("name").toString().toLowerCase().replaceAll('\\[', "").replaceAll('\\(', "")
+                def cityB = b.value.getAt("name").toString().toLowerCase().replaceAll('\\[', "").replaceAll('\\(', "")
+                cityA <=> cityB
             }
 
             writeDataToCSV(sortedAndCompactedData)
 
-            println "Processed ${sortedAndCompactedData.size()} unique records from ${filesToCompact.size()} datasource files."
+            log.info "Processed ${sortedAndCompactedData.size()} unique records from ${totalRowsProccessed} total records."
             return compactedData
         } else {
-            println "Found a Directory $folderToProcess, processing folder."
+            log.info "Found a Directory $folderToProcess, processing folder."
             compactDataSources(folderToProcess)
         }
 
