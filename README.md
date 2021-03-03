@@ -25,15 +25,15 @@ The application optionally takes in an argument expecting a directory path for p
 argument, the application will process the sample data files from Imply, kept in the ./conf folder of the app. If the 
 application is not able to determine the provided argument as a valid File path, the application will exit.
 
-To further simplify execution, a Windows and Unix script are also provided to execute the application via standalone mode. 
-In the ./app folder, the respective DataSourceCompaction scripts will execute the gradle commands below.
+To further simplify execution, a Windows and Unix script are provided to execute the application via standalone mode. 
+In the project's root folder, the respective DataSourceCompaction scripts will execute the gradle commands below.
 
 The application will output logging into the console only. There is no external logging kept for the application.
 
 Files that have been processed will remain and generated .csv files will be timestamped, creating a new file on each execution.
 
 ## Standalone Execution
-To execute the application to process the sample files in the ./conf folder, run this command in the base folder of the project
+To execute the application to process the sample files in the ./conf folder, run this command in the projects root folder
 where the gradlew scripts live.
 ```base
 .\gradlew run
@@ -47,18 +47,18 @@ fully qualified directory path. A Unix example is shown below.
 
 
 ## Java Execution
-A Gradle build will produce a .jar file that can also be executed with Java.
+~~A Gradle build will produce a .jar file that can also be executed with Java.~~
 ```bash
 .\gradlew build 
 ```
 
-Produces: _./build/libs/app.jar_. The application can then be executed by java with:
+~~Produces: _./build/libs/app.jar_. The application can then be executed by java with:~~
 
 ```bash
 java -cp app.jar imply.DataSourceCompaction 
 ```
 
-or since a Manifest file is provided:
+~~or since a Manifest file is provided:~~
 
 ```bash
 java -jar app.jar
@@ -102,7 +102,7 @@ ignoring case.
 def braTotalPopulation = 0;
 mergedDataSource.each {
     if (it.value.get("country").toString().equalsIgnoreCase("BRA")) {
-        braTotalPopulation += Long.parseLong(it.value.get("population").toString())
+        braTotalPopulation += it.value.get("population")
     } else {
         return
     }
@@ -119,5 +119,6 @@ mergedDataSource.each {
 - Processing of different file types simultaneously.
 
 **How would you scale your solution to a much larger dataset (too large for a single machine to store)?**
-- Migrate the program to a Spark job and leverage Apache Spark. The code can easily be modified to a Java Spark job
+
+Migrate the program to a Spark job and leverage Apache Spark. The code can easily be modified to a Java Spark job
 for disributed computing of much larger datasets.
