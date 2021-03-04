@@ -33,13 +33,13 @@ The application will output logging into the console only. There is no external 
 Files that have been processed will remain and generated .csv files will be timestamped, creating a new file on each execution.
 
 ## Standalone Execution
-To execute the application to process the sample files in the ./conf folder, run this command in the projects root folder
+To execute the application to process the sample files in the ./conf folder, run this command in the project's root folder
 where the gradlew scripts live.
 ```base
 .\gradlew run
 ```
 
-To execute the application to process datasource files in another directory pass the --args= flag and provide a valid 
+To execute the application to process datasource files in another directory pass the '--args=' flag and provide a valid 
 fully qualified directory path. A Unix example is shown below.
 ```base
 .\gradlew run --args='/path/to/datasources'
@@ -78,6 +78,8 @@ The totals for each data source were then tallied for the total number or rows p
 For the number of unique rows, a HashMap was utilized to use hash collisions to detect duplicates. Once completed, 
 the .size() of my cleansed list of data entries provides the unique count of rows.
 
+See the method _imply.DataSourceCompaction.processDataFromSource()_ for the implementation of how both totals were generated.
+
 **What is the city with the largest population?**
 
 _The city with the largest population is: Mumbai (Bombay), IND with a population of 10500000._
@@ -115,10 +117,10 @@ mergedDataSource.each {
     - Keeping sort order while building list.
     - Keeping track of population statistics while processing files to find the highest populated city
     and total population for each city.
-- Async calls for file processing.
-- Processing of different file types simultaneously.
+- Using async calls for processing multiple files of the same type simultaneously.
+- Using async calls for processing of different file types simultaneously.
 
 **How would you scale your solution to a much larger dataset (too large for a single machine to store)?**
 
-Migrate the program to a Spark job and leverage Apache Spark. The code can easily be modified to a Java Spark job
-for disributed computing of much larger datasets.
+In order to scale to a larger dataset, I would migrate the program to a Spark job and leverage Apache Spark. The code 
+can easily be modified to a Java Spark job for exactly this purpose, distributed computing of much larger datasets.
