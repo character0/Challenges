@@ -6,6 +6,7 @@ package imply
 import com.opencsv.CSVParser
 import com.opencsv.CSVWriter
 import com.xlson.groovycsv.*
+import groovy.util.logging.Log
 import org.apache.avro.file.*
 import org.apache.avro.generic.*
 
@@ -14,7 +15,7 @@ import groovy.json.*
 //java -cp app.jar imply.DataSourceCompaction
 //gradle run --args='../'
 
-@groovy.util.logging.Log
+@Log
 class DataSourceCompaction {
 
     final static String DEFAULT_BASE_DIR = "./conf"
@@ -52,7 +53,7 @@ class DataSourceCompaction {
             mergedDataSource.each {
                 if (it.value.get("country").toString().equalsIgnoreCase("BRA")) {
                     //log.info "BRA: ${it.value.get("name").toString()} - ${it.value.get("population").toString()}"
-                    braTotalPopulation += Long.parseLong(it.value.get("population").toString())
+                    braTotalPopulation += it.value.get("population")
                 } else {
                     return
                 }
@@ -124,7 +125,7 @@ class DataSourceCompaction {
      * @param processedRecords
      * @return
      */
-    def static processDataFromSource(File fileToProcess, HashMap processedRecords) {
+    def static processDataFromSource(File fileToProcess, HashMap processedRecords) { //TODO Optimization for async
 
         def totalRowsProcessed = 0
         def filename = fileToProcess.getName()
@@ -151,7 +152,7 @@ class DataSourceCompaction {
                 parsedFileData.each { line ->
                     def city = line.Name.trim()
                     def country = line.CountryCode
-                    def pop = line.Population
+                    def pop = line.Population as Long
                     processedRecords.put("${city},${country}", ["name" : city, "country" : country, "population" : pop])
                     totalRowsProcessed++
                 }
@@ -161,7 +162,7 @@ class DataSourceCompaction {
                 parsedFileData.each { line ->
                     def city = line.Name.trim()
                     def country = line.CountryCode
-                    def pop = line.Population
+                    def pop = line.Population as Long
                     processedRecords.put("${city},${country}", ["name": city, "country": country, "population": pop])
                     totalRowsProcessed++
                 }
@@ -194,9 +195,8 @@ class DataSourceCompaction {
             File[] filesToCompact = findDataSourceFiles(folderToProcess)
             log.info "Compacting ${filesToCompact.length} datasource files."
 
-            //TODO Optimization for async
             def totalRowsProccessed = 0;
-            filesToCompact.each {totalRowsProccessed += processDataFromSource(it, compactedData) }
+            filesToCompact.each {totalRowsProccessed += processDataFromSource(it, compactedData) } //TODO Optimization for async
 
             def sortedAndCompactedData = compactedData.sort {  a,  b ->
                 def cityA = a.value.getAt("name").toString().toLowerCase().replaceAll('\\[', "").replaceAll('\\(', "")
