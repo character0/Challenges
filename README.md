@@ -55,7 +55,6 @@ With the directory argument:
 sh gradlew run --args='/path/to/datasources'
 ```
 
-
 On Windows (Command Prompt)
 ```base
 gradlew.bat run
