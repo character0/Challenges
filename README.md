@@ -18,20 +18,21 @@ you determined your answer with any applicable code):
 
 # RunBook
 ##About The Solution
-The solution is a self-contained Gradle application written in Groovy. Gradle is not only the build tool for the application,
-but also allows the application to be executed in isolation with the bundled gradelw library. This application can be executed 
-directly in the project with the provided GradleWrapper with no other requirements other than connectivity to the internet.
- 
+The solution is a Gradle application written in Groovy. This application can be executed directly in the project with 
+the provided GradleWrapper with no other requirements other than connectivity to the internet. Gradle is not only the 
+build tool for the application, but also allows the application to be executed in isolation with the bundled _gradelw_ library. 
 The **Standalone Execution** section outlines this process. Groovy was used as the programming language over pure Java 
 because of my relevant experience and because of its wonderful I/O libs.
 
 The application optionally takes in an argument which expects a valid directory path for processing datasource files. 
 Without a directory argument, the application will process the sample data files from Imply, kept in the ./conf folder 
-of the project. If the application is not able to determine the provided argument as a valid File path, the application will exit.
+of the project. If the application is not able to determine the provided argument as a valid file path, the application will exit.
 
 The application will output logging into the console only. There is no external logging kept for the application.
 
-Files that have been processed will remain and generated .csv files will be timestamped, creating a new file on each execution.
+Files that have been processed will remain in their source directory and any generated .csv files from the application 
+will be timestamped and named as CityList.$timestamp.csv. 
+
 
 ## Standalone Execution
 To execute the application to process the sample files in the ./conf folder, run this command in the project's root folder
@@ -41,16 +42,8 @@ To further simplify execution, Windows and Unix scripts (_DataSourceCompaction.c
 are provided to execute the application via standalone mode. In the project's root folder, the respective DataSourceCompaction 
 scripts will execute the gradle commands outlined below.
 
-On Windows (PowerShell)
-```base
-.\gradlew run
-```
-
 To execute the application to process datasource files in another directory pass the '--args=' flag and provide a valid 
-fully qualified directory path. A Unix example is shown below.
-```base
-.\gradlew run --args='C:\path\to\datasources'
-```
+fully qualified directory path.
 
 On Unix (Bash)
 ```base
@@ -61,6 +54,23 @@ With the directory argument:
 ```base
 sh gradlew run --args='/path/to/datasources'
 ```
+
+
+On Windows (Command Prompt)
+```base
+gradlew.bat run
+```
+
+On Windows (PowerShell)
+```base
+.\gradlew run
+```
+
+With the directory argument:
+```base
+.\gradlew run --args='C:\path\to\datasources'
+```
+
 
 
 ## Java Execution [TBD]
