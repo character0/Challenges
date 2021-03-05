@@ -17,16 +17,19 @@ you determined your answer with any applicable code):
 - How would you scale your solution to a much larger dataset (too large for a single machine to store)?
 
 # RunBook
-##About
-As this is a Gradle project, this can be executed to build or execute directly in the project with the provided GradleWrapper 
-with no other requirements other than connectivity to the internet. The **Standalone Execution** section outlines this process.
+##About The Solution
+The solution is a self-contained Gradle application written in Groovy. Gradle is not only the build tool for the application,
+but also allows the application to be executed in isolation with the bundled gradelw library. This application can be executed 
+directly in the project with the provided GradleWrapper with no other requirements other than connectivity to the internet. 
+The **Standalone Execution** section outlines this process. Groovy was used as the programming language over pure Java 
+because of my relevant experience and because of its wonderful I/O libs.
 
-The application optionally takes in an argument expecting a directory path for processing datasource files. Without a directory
-argument, the application will process the sample data files from Imply, kept in the ./conf folder of the app. If the 
-application is not able to determine the provided argument as a valid File path, the application will exit.
+The application optionally takes in an argument which expects a valid directory path for processing datasource files. 
+Without a directory argument, the application will process the sample data files from Imply, kept in the ./conf folder 
+of the project. If the application is not able to determine the provided argument as a valid File path, the application will exit.
 
-To further simplify execution, a Windows and Unix script are provided to execute the application via standalone mode. 
-In the project's root folder, the respective DataSourceCompaction scripts will execute the gradle commands below.
+To further simplify execution, a Windows and Unix script are also provided to execute the application via standalone mode. 
+In the project's root folder, the respective DataSourceCompaction scripts will execute the gradle commands outlined below.
 
 The application will output logging into the console only. There is no external logging kept for the application.
 
@@ -35,6 +38,8 @@ Files that have been processed will remain and generated .csv files will be time
 ## Standalone Execution
 To execute the application to process the sample files in the ./conf folder, run this command in the project's root folder
 where the gradlew scripts live.
+
+Windows
 ```base
 .\gradlew run
 ```
@@ -42,7 +47,18 @@ where the gradlew scripts live.
 To execute the application to process datasource files in another directory pass the '--args=' flag and provide a valid 
 fully qualified directory path. A Unix example is shown below.
 ```base
-.\gradlew run --args='/path/to/datasources'
+.\gradlew run --args='C:\path\to\datasources'
+```
+
+Unix
+```base
+sh gradlew run
+```
+
+To execute the application to process datasource files in another directory pass the '--args=' flag and provide a valid 
+fully qualified directory path. A Unix example is shown below.
+```base
+sh gradlew run --args='/path/to/datasources'
 ```
 
 
