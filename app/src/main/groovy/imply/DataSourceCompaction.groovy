@@ -31,11 +31,11 @@ class DataSourceCompaction {
             if (new File(args[0]).exists()) {
                 mergedDataSource = compactDataSources(args[0])
             } else {
-                log.error "Argument ${new File(args[0]).absolutePath} not a valid directory."
+                log.severe "Argument ${new File(args[0]).absolutePath} not a valid directory."
                 System.exit(0)
             }
         } else {
-            log.error "Too many arguments (${args.size()}) passed in, expected 1 or 0; Shutting down."
+            log.severe "Too many arguments (${args.size()}) passed in, expected 1 or 0; Shutting down."
             System.exit(0)
         }
 
