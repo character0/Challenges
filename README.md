@@ -45,7 +45,7 @@ scripts will execute the gradle commands outlined below.
 To execute the application to process datasource files in another directory pass the '--args=' flag and provide a valid 
 fully qualified directory path.
 
-On Unix (Bash)
+**On Unix (Bash)**
 ```base
 sh gradlew run
 ```
@@ -55,12 +55,12 @@ With the directory argument:
 sh gradlew run --args='/path/to/datasources'
 ```
 
-On Windows (Command Prompt)
+**On Windows (Command Prompt)**
 ```base
 gradlew.bat run
 ```
 
-On Windows (PowerShell)
+**On Windows (PowerShell)**
 ```base
 .\gradlew run
 ```
