@@ -17,7 +17,7 @@ you determined your answer with any applicable code):
 - How would you scale your solution to a much larger dataset (too large for a single machine to store)?
 
 # RunBook
-##About The Solution
+## About The Solution
 The solution is a Gradle application written in Groovy. This application can be executed directly in the project with 
 the provided GradleWrapper with no other requirements other than connectivity to the internet. Gradle is not only the 
 build tool for the application, but also allows the application to be executed in isolation with the bundled _gradelw_ library. 
